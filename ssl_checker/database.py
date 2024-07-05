@@ -2,7 +2,7 @@ import sqlite3
 import os
 from datetime import datetime, timedelta
 
-DB_FILE = os.path.expanduser("~/.ssl-checker/data.db")
+DB_FILE = os.path.expanduser("~/.ssl-daily-check/data.db")
 
 def init_db():
     conn = sqlite3.connect(DB_FILE)

@@ -6,7 +6,7 @@ from .notifier import send_notifications
 
 @click.command()
 def main():
-    """SSL Checker Tool"""
+    """SSL Daily Check Tool"""
     ensure_config_files()
     init_db()
     expired_domains = check_ssl()

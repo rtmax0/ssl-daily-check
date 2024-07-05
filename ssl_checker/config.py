@@ -1,9 +1,11 @@
 import os
 import json
 
-CONFIG_DIR = os.path.expanduser("~/.ssl-checker")
+CONFIG_DIR = os.path.expanduser("~/.ssl-daily-check")
 DOMAINS_FILE = os.path.join(CONFIG_DIR, "domains.txt")
 NOTIFY_RULE_FILE = os.path.join(CONFIG_DIR, "notify-rule.json")
+
+EXPIRY_THRESHOLD_DAYS = 15
 
 def ensure_config_files():
     os.makedirs(CONFIG_DIR, exist_ok=True)

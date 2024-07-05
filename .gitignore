@@ -23,9 +23,5 @@ dist/
 .DS_Store
 Thumbs.db
 
-# Project specific
-~/.ssl-checker/
-*.db
-
 # Logs
 *.log

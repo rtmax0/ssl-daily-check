@@ -1,6 +1,6 @@
-# SSL Checker
+# SSL Daily Check
 
-SSL Checker is a Python-based tool that monitors SSL certificates for specified domains and sends notifications when certificates are nearing expiration.
+SSL Daily Check is a Python-based tool that monitors SSL certificates for specified domains and sends notifications when certificates are nearing expiration.
 
 ## Features
 
@@ -19,7 +19,7 @@ SSL Checker is a Python-based tool that monitors SSL certificates for specified 
 
 1. Clone the repository:
    ```
-   git clone https://github.com/yourusername/ssl-checker.git
+   git clone https://github.com/rtmax0/ssl-daily-check.git
    cd ssl-checker
    ```
 
@@ -30,13 +30,13 @@ SSL Checker is a Python-based tool that monitors SSL certificates for specified 
 
 ## Configuration
 
-1. Create a `~/.ssl-checker/domains.txt` file with the domains you want to monitor:
+1. Create a `~/.ssl-daily-check/domains.txt` file with the domains you want to monitor:
    ```
    example.com:Example Website
    yourdomain.com:Your Website
    ```
 
-2. Create a `~/.ssl-checker/notify-rule.json` file with your WeChat Work webhook URL:
+2. Create a `~/.ssl-daily-check/notify-rule.json` file with your WeChat Work webhook URL:
    ```json
    [
      {
@@ -49,7 +49,7 @@ SSL Checker is a Python-based tool that monitors SSL certificates for specified 
 
 ## Usage
 
-Run the SSL Checker manually:
+Run the SSL Daily Check manually:
 
 ```
 poetry run ssl-checker
