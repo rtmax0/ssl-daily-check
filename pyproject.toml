@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "ssl-daily-check"
-version = "0.1.0"
+version = "0.1.1"
 description = "Daily SSL certificate monitoring and checking tool"
 authors = ["rtmax0 <rtmax0@gmail.com>"]
 license = "MIT"
