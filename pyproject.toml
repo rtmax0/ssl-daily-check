@@ -1,9 +1,23 @@
 [tool.poetry]
 name = "ssl-checker"
 version = "0.1.0"
-description = ""
+description = "Automated SSL certificate monitoring tool"
 authors = ["rtmax0 <rtmax0@gmail.com>"]
+license = "MIT"
 readme = "README.md"
+homepage = "https://github.com/rtmax0/ssl-checker"
+repository = "https://github.com/rtmax0/ssl-checker"
+keywords = ["ssl", "certificate", "monitoring", "security"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+]
 
 [tool.poetry.dependencies]
 python = "^3.8"
@@ -11,9 +25,6 @@ requests = "^2.26.0"
 click = "^8.0.3"
 
 [tool.poetry.dev-dependencies]
-pytest = "^6.2.5"
-
-[tool.poetry.group.dev.dependencies]
 pytest = "^8.2.2"
 
 [build-system]

@@ -12,7 +12,7 @@ SSL Checker is a Python-based tool that monitors SSL certificates for specified 
 
 ## Requirements
 
-- Python 3.6+
+- Python 3.8+
 - Poetry for dependency management
 
 ## Installation
