@@ -1,7 +1,7 @@
 import os
 import json
 import pytest
-from ssl_checker.config import ensure_config_files, load_domains, load_notify_rules, CONFIG_DIR, DOMAINS_FILE, NOTIFY_RULE_FILE
+from ssl_daily_check.config import ensure_config_files, load_domains, load_notify_rules, CONFIG_DIR, DOMAINS_FILE, NOTIFY_RULE_FILE
 
 @pytest.fixture
 def temp_config_dir(tmp_path):

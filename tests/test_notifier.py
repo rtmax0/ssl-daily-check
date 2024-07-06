@@ -1,10 +1,10 @@
 import pytest
 from unittest.mock import patch, MagicMock
-from ssl_checker.notifier import send_notifications, send_qyweixin_notification
+from ssl_daily_check.notifier import send_notifications, send_qyweixin_notification
 
 @pytest.fixture
 def mock_load_notify_rules():
-    with patch('ssl_checker.notifier.load_notify_rules') as mock:
+    with patch('ssl_daily_check.notifier.load_notify_rules') as mock:
         mock.return_value = [
             {
                 "id": "notify1",
@@ -16,7 +16,7 @@ def mock_load_notify_rules():
 
 @pytest.fixture
 def mock_requests_post():
-    with patch('ssl_checker.notifier.requests.post') as mock:
+    with patch('ssl_daily_check.notifier.requests.post') as mock:
         mock.return_value = MagicMock(status_code=200)
         yield mock
 

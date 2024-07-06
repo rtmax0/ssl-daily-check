@@ -10,6 +10,6 @@ poetry publish -r testpypi
 sleep 10
 
 # 尝试从 TestPyPI 安装包
-pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ ssl-checker
+pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ ssl-daily-check
 
 echo "如果没有错误信息，那么包已成功发布到 TestPyPI 并可以安装。"

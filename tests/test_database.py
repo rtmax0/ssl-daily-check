@@ -1,7 +1,7 @@
 import os
 import pytest
 from datetime import datetime, timedelta
-from ssl_checker.database import init_db, save_to_db, get_domain_info, DB_FILE
+from ssl_daily_check.database import init_db, save_to_db, get_domain_info, DB_FILE
 
 @pytest.fixture
 def temp_db(tmp_path):

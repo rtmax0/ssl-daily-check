@@ -20,7 +20,7 @@ SSL Daily Check is a Python-based tool that monitors SSL certificates for specif
 1. Clone the repository:
    ```
    git clone https://github.com/rtmax0/ssl-daily-check.git
-   cd ssl-checker
+   cd ssl-daily-check
    ```
 
 2. Install dependencies using Poetry:
@@ -52,13 +52,13 @@ SSL Daily Check is a Python-based tool that monitors SSL certificates for specif
 Run the SSL Daily Check manually:
 
 ```
-poetry run ssl-checker
+poetry run ssl-daily-check
 ```
 
 To set up automatic checking, add a cron job:
 
 ```
-0 0 * * * /path/to/your/poetry/environment/bin/ssl-checker
+0 0 * * * /path/to/your/poetry/environment/bin/ssl-daily-check
 ```
 
 This will run the SSL Checker daily at midnight.

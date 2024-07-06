@@ -1,6 +1,6 @@
 import requests
 
-from ssl_checker.config import load_notify_rules
+from ssl_daily_check.config import load_notify_rules
 
 def send_notifications(expired_domains):
     rules = load_notify_rules()
