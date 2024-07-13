@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "ssl-daily-check"
-version = "0.1.1"
+version = "0.2.0"
 description = "Daily SSL certificate monitoring and checking tool"
 authors = ["rtmax0 <rtmax0@gmail.com>"]
 license = "MIT"
@@ -23,6 +23,7 @@ classifiers = [
 python = "^3.8"
 requests = "^2.26.0"
 click = "^8.0.3"
+tabulate = "^0.8.9"
 
 [tool.poetry.dev-dependencies]
 pytest = "^8.2.2"
@@ -32,4 +33,4 @@ requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
-ssl-daily-check = "ssl_daily_check.main:main"
+ssl-daily-check = "ssl_daily_check.main:cli"

@@ -5,9 +5,10 @@ SSL Daily Check is a Python-based tool that monitors SSL certificates for specif
 ## Features
 
 - Checks SSL certificates for multiple domains
-- Stores certificate information in a SQLite database
+- Stores domain and certificate information in a SQLite database
 - Sends notifications via WeChat Work (企业微信) when certificates are close to expiration
-- Configurable through simple text files
+- Configurable through JSON files
+- Provides command-line interface for managing domains
 - Designed to run as a cron job on Linux systems
 
 ## Requirements
@@ -19,7 +20,7 @@ SSL Daily Check is a Python-based tool that monitors SSL certificates for specif
 
 1. Clone the repository:
    ```
-   git clone https://github.com/rtmax0/ssl-daily-check.git
+   git clone https://github.com/yourusername/ssl-daily-check.git
    cd ssl-daily-check
    ```
 
@@ -30,35 +31,59 @@ SSL Daily Check is a Python-based tool that monitors SSL certificates for specif
 
 ## Configuration
 
-1. Create a `~/.ssl-daily-check/domains.txt` file with the domains you want to monitor:
-   ```
-   example.com:Example Website
-   yourdomain.com:Your Website
-   ```
-
-2. Create a `~/.ssl-daily-check/notify-rule.json` file with your WeChat Work webhook URL:
-   ```json
-   [
-     {
-       "id": "notify1",
-       "type": "qyweixin",
-       "url": "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=your-key-here"
-     }
-   ]
-   ```
+Create a `~/.ssl-daily-check/notify-rule.json` file with your WeChat Work webhook URL:
+```json
+[
+  {
+    "id": "notify1",
+    "type": "qyweixin",
+    "url": "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=your-key-here"
+  }
+]
+```
 
 ## Usage
 
-Run the SSL Daily Check manually:
+The SSL Daily Check tool provides several commands:
 
 ```
-poetry run ssl-daily-check
+Usage: ssl-daily-check [OPTIONS] COMMAND [ARGS]...
+
+  SSL Daily Check Tool
+
+  This tool helps you manage and monitor SSL certificates for multiple domains.
+
+Commands:
+  add     Add a new domain to monitor
+  list    List all monitored domains
+  remove  Remove a domain from monitoring
+  check   Check SSL certificates for all domains
 ```
+
+1. Add a new domain:
+   ```
+   poetry run ssl-daily-check add example.com
+   ```
+
+2. List all monitored domains:
+   ```
+   poetry run ssl-daily-check list
+   ```
+
+3. Remove a domain:
+   ```
+   poetry run ssl-daily-check remove example.com
+   ```
+
+4. Check SSL certificates:
+   ```
+   poetry run ssl-daily-check check
+   ```
 
 To set up automatic checking, add a cron job:
 
 ```
-0 0 * * * /path/to/your/poetry/environment/bin/ssl-daily-check
+0 0 * * * /path/to/your/poetry/environment/bin/ssl-daily-check check
 ```
 
 This will run the SSL Checker daily at midnight.
