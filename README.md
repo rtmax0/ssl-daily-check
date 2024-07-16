@@ -10,6 +10,7 @@ SSL Daily Check is a Python-based tool that monitors SSL certificates for specif
 - Configurable through JSON files
 - Provides command-line interface for managing domains
 - Designed to run as a cron job on Linux systems
+- Supports importing domains from a CSV file
 
 ## Requirements
 
@@ -58,6 +59,7 @@ Commands:
   list    List all monitored domains
   remove  Remove a domain from monitoring
   check   Check SSL certificates for all domains
+  import  Import domains from a CSV file
 ```
 
 1. Add a new domain:
@@ -79,6 +81,20 @@ Commands:
    ```
    poetry run ssl-daily-check check
    ```
+
+5. Import domains from a CSV file:
+   ```
+   poetry run ssl-daily-check import domains.csv
+   ```
+   
+   The CSV file should have the following format:
+   ```
+   domain,port,description
+   example.com,443,Example website
+   example.org,8443,Another example
+   ```
+   
+   The 'port' and 'description' fields are optional. If not provided, the default port (443) will be used, and the description will be left empty.
 
 To set up automatic checking, add a cron job:
 

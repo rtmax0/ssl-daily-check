@@ -5,6 +5,7 @@ from .database import init_db, add_domain, get_all_domains, delete_domain, get_d
 from .notifier import send_notifications
 from tabulate import tabulate
 from datetime import datetime
+import csv
 
 @click.group(invoke_without_command=True)
 @click.pass_context
@@ -18,6 +19,7 @@ def cli(ctx):
     list    List all monitored domains
     remove  Remove a domain from monitoring
     check   Check SSL certificates for all domains
+    import  Import domains from a CSV file
     """
     ensure_config_files()
     init_db()
@@ -82,6 +84,27 @@ def check():
         click.echo("Notifications sent for expired domains.")
     else:
         click.echo("No expired domains found.")
+
+@cli.command(name='import')
+@click.argument('csv_file', type=click.Path(exists=True))
+def import_domains(csv_file):
+    """Import domains from a CSV file"""
+    with open(csv_file, 'r') as f:
+        csv_reader = csv.reader(f)
+        next(csv_reader)  # Skip header row
+        for row in csv_reader:
+            if len(row) >= 3:
+                domain, port, description = row[0], int(row[1]), row[2]
+            elif len(row) == 2:
+                domain, port, description = row[0], int(row[1]), ''
+            else:
+                domain, port, description = row[0], 443, ''
+            
+            try:
+                add_domain(domain, port, description)
+                click.echo(f"Domain {domain} added successfully.")
+            except ValueError as e:
+                click.echo(f"Error adding {domain}: {str(e)}")
 
 if __name__ == "__main__":
     cli()

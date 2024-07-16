@@ -2,6 +2,8 @@ import pytest
 from click.testing import CliRunner
 from ssl_daily_check.main import cli
 from unittest.mock import patch
+import tempfile
+import csv
 
 @pytest.fixture
 def runner():
@@ -15,6 +17,7 @@ def test_cli_help(runner):
     assert "list" in result.output
     assert "remove" in result.output
     assert "check" in result.output
+    assert "import" in result.output
 
 def test_add_command(runner):
     with patch('ssl_daily_check.main.add_domain') as mock_add_domain:
@@ -51,3 +54,20 @@ def test_check_command(runner):
         assert result.exit_code == 0
         assert 'Notifications sent for expired domains.' in result.output
         mock_send_notifications.assert_called_once_with([('example.com', 'Example Site', 5)])
+
+def test_import_command(runner):
+    with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.csv') as temp_file:
+        csv_writer = csv.writer(temp_file)
+        csv_writer.writerow(['Domain', 'Port', 'Description'])
+        csv_writer.writerow(['example.com', '443', 'Example Site'])
+        csv_writer.writerow(['test.com', '8443', 'Test Site'])
+        temp_file_name = temp_file.name
+
+    with patch('ssl_daily_check.main.add_domain') as mock_add_domain:
+        result = runner.invoke(cli, ['import', temp_file_name])
+        assert result.exit_code == 0
+        assert 'Domain example.com added successfully.' in result.output
+        assert 'Domain test.com added successfully.' in result.output
+        mock_add_domain.assert_any_call('example.com', 443, 'Example Site')
+        mock_add_domain.assert_any_call('test.com', 8443, 'Test Site')
+        assert mock_add_domain.call_count == 2
