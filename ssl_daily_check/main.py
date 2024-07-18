@@ -99,12 +99,24 @@ def import_domains(csv_file):
                 domain, port, description = row[0], int(row[1]), ''
             else:
                 domain, port, description = row[0], 443, ''
-            
+
             try:
                 add_domain(domain, port, description)
                 click.echo(f"Domain {domain} added successfully.")
             except ValueError as e:
                 click.echo(f"Error adding {domain}: {str(e)}")
+
+@cli.command()
+@click.argument('csv_file', type=click.Path())
+def export(csv_file):
+    """Export domains to a CSV file"""
+    domains = get_all_domains()
+    with open(csv_file, 'w', newline='') as f:
+        csv_writer = csv.writer(f)
+        csv_writer.writerow(['Domain', 'Port', 'Description'])
+        for domain, port, description, _ in domains:
+            csv_writer.writerow([domain, port, description])
+    click.echo(f"Domains exported to {csv_file} successfully.")
 
 if __name__ == "__main__":
     cli()

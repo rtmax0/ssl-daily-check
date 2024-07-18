@@ -1,3 +1,4 @@
+import os
 import pytest
 from click.testing import CliRunner
 from ssl_daily_check.main import cli
@@ -71,3 +72,25 @@ def test_import_command(runner):
         mock_add_domain.assert_any_call('example.com', 443, 'Example Site')
         mock_add_domain.assert_any_call('test.com', 8443, 'Test Site')
         assert mock_add_domain.call_count == 2
+
+def test_export_command(runner):
+    with patch('ssl_daily_check.main.get_all_domains') as mock_get_all_domains:
+        mock_get_all_domains.return_value = [
+            ('example.com', 443, 'Example Site', None),
+            ('test.com', 8443, 'Test Site', None)
+        ]
+        with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.csv') as temp_file:
+            temp_file_name = temp_file.name
+
+        result = runner.invoke(cli, ['export', temp_file_name])
+        assert result.exit_code == 0
+        assert f'Domains exported to {temp_file_name} successfully.' in result.output
+
+        with open(temp_file_name, 'r') as f:
+            csv_reader = csv.reader(f)
+            rows = list(csv_reader)
+            assert rows[0] == ['Domain', 'Port', 'Description']
+            assert rows[1] == ['example.com', '443', 'Example Site']
+            assert rows[2] == ['test.com', '8443', 'Test Site']
+
+        os.unlink(temp_file_name)
