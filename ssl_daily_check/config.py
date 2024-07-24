@@ -16,7 +16,7 @@ def ensure_config_files():
             {
                 "id": "notify1",
                 "type": "qyweixin",
-                "url": "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=your-key-here"
+                "webhook_url": "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=your-key-here"
             }
         ]
         with open(NOTIFY_RULE_FILE, "w") as f:

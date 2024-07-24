@@ -38,7 +38,7 @@ def test_load_notify_rules(temp_config_dir):
     assert len(rules) == 1
     assert rules[0]['id'] == 'notify1'
     assert rules[0]['type'] == 'qyweixin'
-    assert 'url' in rules[0]
+    assert 'webhook_url' in rules[0]
 
 def test_save_and_load_domains_json(temp_config_dir):
     ensure_config_files()

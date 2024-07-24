@@ -1,10 +1,11 @@
 import pytest
 from unittest.mock import patch, MagicMock
-from ssl_daily_check.notifier import send_notifications, send_qyweixin_notification
+from ssl_daily_check.notifier import send_notifications, get_notifier
+from ssl_daily_check.notifiers.qyweixin import QyWeixinNotifier
 
 @pytest.fixture
 def mock_load_notify_rules():
-    with patch('ssl_daily_check.notifier.load_notify_rules') as mock:
+    with patch('ssl_daily_check.config.load_notify_rules') as mock:
         mock.return_value = [
             {
                 "id": "notify1",
@@ -16,7 +17,7 @@ def mock_load_notify_rules():
 
 @pytest.fixture
 def mock_requests_post():
-    with patch('ssl_daily_check.notifier.requests.post') as mock:
+    with patch('requests.post') as mock:
         mock.return_value = MagicMock(status_code=200)
         yield mock
 
@@ -34,17 +35,19 @@ def test_send_notifications(mock_load_notify_rules, mock_requests_post):
     assert "example.com" in kwargs['json']['text']['content']
     assert "test.com" in kwargs['json']['text']['content']
 
-def test_send_qyweixin_notification(mock_requests_post):
-    webhook_url = "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=test-key"
-    expired_domains = [
-        ('example.com', 'Example Site', 10),
-        ('test.com', 'Test Site', 5)
-    ]
+def test_get_notifier():
+    rule = {
+        "type": "qyweixin",
+        "url": "https://example.com/webhook"  # Changed 'webhook_url' to 'url'
+    }
+    notifier = get_notifier(rule)
+    assert isinstance(notifier, QyWeixinNotifier)
+    assert notifier.webhook_url == "https://example.com/webhook"
 
-    send_qyweixin_notification(webhook_url, expired_domains)
-
-    mock_requests_post.assert_called_once()
-    args, kwargs = mock_requests_post.call_args
-    assert args[0] == webhook_url
-    assert "example.com" in kwargs['json']['text']['content']
-    assert "test.com" in kwargs['json']['text']['content']
+def test_get_notifier_unsupported_type():
+    rule = {
+        "type": "unsupported",
+        "url": "https://example.com/webhook"  # Changed 'webhook_url' to 'url'
+    }
+    with pytest.raises(ValueError):
+        get_notifier(rule)
